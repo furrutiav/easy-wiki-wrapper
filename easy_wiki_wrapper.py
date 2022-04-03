@@ -241,13 +241,16 @@ class WikiWrapper(object):
             return o
 
     def save(self, file_name):
+        o = {}
+        for k, v in vars(self).items():
+            o[k] = v
         with open(file_name, 'wb') as file:
-            pickle.dump(self, file)
+            pickle.dump(o, file)
 
     def load(self, file_name):
         with open(file_name, 'rb') as file:
-            new_self = pickle.load(file)
-        for k, v in vars(new_self).items():
+            new_o = pickle.load(file)
+        for k, v in new_o.items():
             self.__dict__[k] = v
 
 
